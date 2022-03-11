@@ -6,15 +6,15 @@ class Author(models.Model):
     user = models.OneToOneField(User, on_delete = models.CASCADE)
     rating = models.IntegerField(default = 0)
 
-    def update_rating(self, new_rating):
-        self.rating = new_rating
-        self.save()
+    # def update_rating(self, new_rating):
+    #     self.rating = new_rating
+    #     self.save()
 
     def __str__(self):
         return f'{self.user}'
 
     def update_rating(self):
-        post_author = Post.objects.filter(author = self.id, Post_type = self.author)
+        post_author = Post.objects.filter(user = self.id, Post_type = self.user)
         total_post_rating = 0
         for post in post_author:
             total_post_rating += post.Post_rating * 3
@@ -27,7 +27,7 @@ class Author(models.Model):
         for comments in Comment.objects.filter(post = post_author):
             total_author_post_rating += comments.comment_rating
 
-        self.author_rating = total_post_rating + total_author_comment_rating + total_author_post_rating
+        self.rating = total_post_rating + total_author_comment_rating + total_author_post_rating
         self.save()
 
 

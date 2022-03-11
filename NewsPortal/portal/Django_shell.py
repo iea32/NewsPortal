@@ -41,3 +41,19 @@ comment2 = Comment.objects.create(post = a2, user = slava.user, text = "Комм
 comment3 = Comment.objects.create(post = a3, user = misha.user, text = "Комментарий3")
 comment4 = Comment.objects.create(post = a1, user = misha.user, text = "Комментарий4")
 
+# Применяя функции like() и dislike() к статьям/новостям и комментариям, скорректировать рейтинги этих объектов.
+
+comment1.like()
+comment2.like()
+comment2.like()
+comment3.dislike()
+
+# Обновить рейтинги пользователей.
+
+slava.update_rating()
+misha.update_rating()
+misha.update_rating()
+
+
+
+
