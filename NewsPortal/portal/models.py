@@ -46,11 +46,10 @@ class Post(models.Model):
         self.save()
 
 
-    def __str__(self):
-        return f'{self.title}: {self.text[:20]}'
+    def preview(self):
+        return f'{self.text[:124]}'
 
-    def get_absolute_url(self):  # добавим абсолютный путь, чтобы после создания нас перебрасывало на страницу с товаром
-        return f'/posts/{self.id}'
+
 
 class PostCategory(models.Model):
     post = models.ForeignKey(Post, on_delete = models.CASCADE)
