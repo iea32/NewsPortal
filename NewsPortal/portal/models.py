@@ -13,6 +13,24 @@ class Author(models.Model):
     def __str__(self):
         return f'{self.user}'
 
+    def update_rating(self):
+        post_author = Post.objects.filter(author = self.id, Post_type = self.author)
+        total_post_rating = 0
+        for post in post_author:
+            total_post_rating += post.Post_rating * 3
+
+        total_author_comment_rating = 0
+        for comments in Comment.objects.filter(user = self.author):
+            total_author_comment_rating += comments.comment_rating
+
+        total_author_post_rating = 0
+        for comments in Comment.objects.filter(post = post_author):
+            total_author_post_rating += comments.comment_rating
+
+        self.author_rating = total_post_rating + total_author_comment_rating + total_author_post_rating
+        self.save()
+
+
 class Category(models.Model):
     name = models.CharField(max_length = 255, unique = True)
 
@@ -45,9 +63,8 @@ class Post(models.Model):
         self.rating -= 1
         self.save()
 
-
     def preview(self):
-        return f'{self.text[:124]}'
+        return f'{self.text[:124]} ...'
 
 
 
